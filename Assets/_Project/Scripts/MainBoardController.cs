@@ -19,7 +19,6 @@ public class MainBoardController : Singleton<MainBoardController>
             {
                 subGrids[i, j] = SubGridsList[count];
                 count++;
-                Debug.Log(count);
             }
         }
         // Initialize the main grid state
@@ -28,7 +27,6 @@ public class MainBoardController : Singleton<MainBoardController>
             for (int j = 0; j < 3; j++)
             {
                 mainGridState[i, j] = 0;
-                Debug.Log(subGrids[i,j].name);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SubGridController : MonoBehaviour
@@ -7,6 +8,7 @@ public class SubGridController : MonoBehaviour
     public int winner = 0; // 0: no winner, 1: X, 2: O
 
     // Reference to the cells (these should be set in the editor or dynamically)
+    public List<Cell> cellList;
     public GameObject[,] cells = new GameObject[3, 3];
 
     private void Start()
@@ -19,6 +21,16 @@ public class SubGridController : MonoBehaviour
                 gridState[i, j] = 0;
             }
         }
+
+        int cellCount = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                cells[i, j] = cellList[cellCount].gameObject;
+                cellCount++;
+            }
+        }
     }
 
     // Method to handle player move
@@ -27,6 +39,8 @@ public class SubGridController : MonoBehaviour
         if (gridState[x, y] == 0 && !isWon)
         {
             gridState[x, y] = player;
+            Debug.Log(x);
+            Debug.Log(y);
             UpdateCellVisual(x, y, player);
             CheckWinCondition();
             return true;
@@ -39,9 +53,20 @@ public class SubGridController : MonoBehaviour
     {
         // Assuming each cell has a Text or SpriteRenderer to show X or O
         if (player == 1)
+        {
+            Debug.Log(cells[x, y].gameObject,cells[x, y].gameObject);
+            Debug.Log(cells[x, y].GetComponent<SpriteRenderer>());
             cells[x, y].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("X");
+            
+            Debug.Log(cells[x, y] + "Found");
+        }
         else
+        {
+            
+            Debug.Log(cells[x, y].GetComponent<SpriteRenderer>());
             cells[x, y].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("O");
+            Debug.Log(cells[x, y] + "Found");
+        }
     }
 
     // Method to check for win condition
