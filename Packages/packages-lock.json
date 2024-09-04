@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.joker_yash96.unitytools": {
+      "version": "https://github.com/YashVakil96/Unity-Tools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "dbfff1690cb42b8d628090326f827f475adf26df"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.3",
       "depth": 1,
