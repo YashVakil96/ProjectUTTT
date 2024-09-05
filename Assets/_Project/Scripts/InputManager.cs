@@ -4,6 +4,10 @@ public class InputManager : MonoBehaviour
 {
     public MainBoardController mainBoardController;
     private int currentPlayer = 1;
+    public bool firstMove;
+    public int lastSubGridX;
+    public int lastSubGridY;
+
 
     void Update()
     {
@@ -18,12 +22,44 @@ public class InputManager : MonoBehaviour
                 Cell cell = hit.collider.GetComponent<Cell>();
                 if (cell != null && !cell.IsOccupied)
                 {
-                    Debug.Log(cell);
-                    Debug.Log(cell.GetComponent<Cell>());
-                    Debug.Log(cell.GetComponent<BoxCollider2D>());
-                    mainBoardController.MakeMove(cell.SubGridX, cell.SubGridY, cell.CellX, cell.CellY, currentPlayer);
-                    cell.OccupyCell(currentPlayer);
-                    SwitchPlayer();
+                    if (!firstMove)
+                    {
+                        mainBoardController.MakeMove(cell.SubGridX, cell.SubGridY, cell.CellX, cell.CellY, currentPlayer);
+                        cell.OccupyCell(currentPlayer);
+                        SwitchPlayer();
+                        lastSubGridX = cell.CellX;
+                        lastSubGridY = cell.CellY;
+                        firstMove = true;
+                    }
+                    else if(lastSubGridX == cell.SubGridX && lastSubGridY== cell.SubGridY && !mainBoardController.subGrids[lastSubGridX,lastSubGridY].isWon)
+                    {
+                        mainBoardController.MakeMove(cell.SubGridX, cell.SubGridY, cell.CellX, cell.CellY, currentPlayer);
+                        cell.OccupyCell(currentPlayer);
+                        SwitchPlayer();
+                        lastSubGridX = cell.CellX;
+                        lastSubGridY = cell.CellY;
+                    }
+                    else if (mainBoardController.subGrids[lastSubGridX,lastSubGridY].isWon)
+                    {
+                        if (!mainBoardController.subGrids[cell.SubGridX, cell.SubGridY].isWon)
+                        {
+                            mainBoardController.MakeMove(cell.SubGridX, cell.SubGridY, cell.CellX, cell.CellY, currentPlayer);
+                            cell.OccupyCell(currentPlayer);
+                            SwitchPlayer();
+                            lastSubGridX = cell.CellX;
+                            lastSubGridY = cell.CellY;    
+                        }
+                        else
+                        {
+                            Debug.Log("Invalid Move");
+                        }
+                        
+                    }
+                    else
+                    {
+                        Debug.Log("Invalid Move");
+                    }
+                    
                 }
             }
             else

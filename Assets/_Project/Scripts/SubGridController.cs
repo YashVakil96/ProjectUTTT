@@ -10,6 +10,9 @@ public class SubGridController : MonoBehaviour
     // Reference to the cells (these should be set in the editor or dynamically)
     public List<Cell> cellList;
     public GameObject[,] cells = new GameObject[3, 3];
+    public GameObject whiteSquare;
+    public GameObject winObject;
+    public List<Sprite> winSymbol;
 
     private void Start()
     {
@@ -39,12 +42,11 @@ public class SubGridController : MonoBehaviour
         if (gridState[x, y] == 0 && !isWon)
         {
             gridState[x, y] = player;
-            Debug.Log(x);
-            Debug.Log(y);
             UpdateCellVisual(x, y, player);
             CheckWinCondition();
             return true;
         }
+
         return false;
     }
 
@@ -54,18 +56,11 @@ public class SubGridController : MonoBehaviour
         // Assuming each cell has a Text or SpriteRenderer to show X or O
         if (player == 1)
         {
-            Debug.Log(cells[x, y].gameObject,cells[x, y].gameObject);
-            Debug.Log(cells[x, y].GetComponent<SpriteRenderer>());
             cells[x, y].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("X");
-            
-            Debug.Log(cells[x, y] + "Found");
         }
         else
         {
-            
-            Debug.Log(cells[x, y].GetComponent<SpriteRenderer>());
             cells[x, y].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("O");
-            Debug.Log(cells[x, y] + "Found");
         }
     }
 
@@ -80,6 +75,7 @@ public class SubGridController : MonoBehaviour
             if (gridState[0, i] == gridState[1, i] && gridState[1, i] == gridState[2, i] && gridState[0, i] != 0)
                 SetWin(gridState[0, i]);
         }
+
         if (gridState[0, 0] == gridState[1, 1] && gridState[1, 1] == gridState[2, 2] && gridState[0, 0] != 0)
             SetWin(gridState[0, 0]);
         if (gridState[0, 2] == gridState[1, 1] && gridState[1, 1] == gridState[2, 0] && gridState[0, 2] != 0)
@@ -90,6 +86,9 @@ public class SubGridController : MonoBehaviour
     {
         isWon = true;
         winner = player;
+        whiteSquare.SetActive(true);
+        winObject.SetActive(true);
+        winObject.GetComponent<SpriteRenderer>().sprite = winSymbol[player];
         // Optionally, update visuals for the sub-grid to indicate the win
     }
 }
