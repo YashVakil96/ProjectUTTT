@@ -1,3 +1,4 @@
+using UltimateTTT;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -72,5 +73,6 @@ public class InputManager : MonoBehaviour
     void SwitchPlayer()
     {
         currentPlayer = (currentPlayer == 1) ? 2 : 1;
+        UIManager.Instance.ChangeCurrentPlayerImage(currentPlayer);
     }
 }

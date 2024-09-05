@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UltimateTTT;
 using UnityEngine;
 
 public class MainBoardController : Singleton<MainBoardController>
@@ -39,6 +40,8 @@ public class MainBoardController : Singleton<MainBoardController>
             if (subGrids[subGridX, subGridY].isWon)
             {
                 mainGridState[subGridX, subGridY] = subGrids[subGridX, subGridY].winner;
+                MiniGrid.Instance.UpdateMiniGrid(subGridX, subGridY, player);
+                
                 CheckMainGridWinCondition();
             }
         }
