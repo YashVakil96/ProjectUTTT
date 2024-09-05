@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UltimateTTT
@@ -25,6 +26,11 @@ namespace UltimateTTT
             {
                 currentPlayer.sprite = circle;
             }
+        }
+
+        public void RestartLevel()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

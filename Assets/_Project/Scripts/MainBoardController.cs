@@ -8,8 +8,8 @@ public class MainBoardController : Singleton<MainBoardController>
     public List<SubGridController> SubGridsList;
     public SubGridController[,] subGrids = new SubGridController[3, 3]; // Attach sub-grids in editor or dynamically
 
-    private int[,] mainGridState = new int[3, 3]; // Tracks the winner of each sub-grid
-    private bool isGameOver = false;
+    public int[,] mainGridState = new int[3, 3]; // Tracks the winner of each sub-grid
+    public bool isGameOver = false;
 
     private void Start()
     {
@@ -39,10 +39,24 @@ public class MainBoardController : Singleton<MainBoardController>
         {
             if (subGrids[subGridX, subGridY].isWon)
             {
+                Debug.Log("1");
                 mainGridState[subGridX, subGridY] = subGrids[subGridX, subGridY].winner;
                 MiniGrid.Instance.UpdateMiniGrid(subGridX, subGridY, player);
-                
                 CheckMainGridWinCondition();
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
+            }
+            else
+            {
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
+                Debug.Log("2");
+            }
+        }
+        else
+        {
+            if (isGameOver == false)
+            {
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
+                Debug.Log("3");
             }
         }
     }
@@ -61,11 +75,13 @@ public class MainBoardController : Singleton<MainBoardController>
             EndGame(mainGridState[0, 0]);
         if (mainGridState[0, 2] == mainGridState[1, 1] && mainGridState[1, 1] == mainGridState[2, 0] && mainGridState[0, 2] != 0)
             EndGame(mainGridState[0, 2]);
+
     }
 
     private void EndGame(int winner)
     {
         isGameOver = true;
+        CameraController.Instance.CenterCam();
         Debug.Log("Player " + winner + " wins!");
         // Trigger any end game UI, animations, etc.
     }

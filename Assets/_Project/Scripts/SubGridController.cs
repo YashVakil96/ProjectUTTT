@@ -44,6 +44,7 @@ public class SubGridController : MonoBehaviour
         {
             gridState[x, y] = player;
             UpdateCellVisual(x, y, player);
+            
             CheckWinCondition();
             return true;
         }
