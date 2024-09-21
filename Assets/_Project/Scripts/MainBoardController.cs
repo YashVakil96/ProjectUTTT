@@ -22,6 +22,7 @@ public class MainBoardController : Singleton<MainBoardController>
                 count++;
             }
         }
+
         // Initialize the main grid state
         for (int i = 0; i < 3; i++)
         {
@@ -43,19 +44,18 @@ public class MainBoardController : Singleton<MainBoardController>
                 mainGridState[subGridX, subGridY] = subGrids[subGridX, subGridY].winner;
                 MiniGrid.Instance.UpdateMiniGrid(subGridX, subGridY, player);
                 CheckMainGridWinCondition();
-                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX, cellY));
             }
             else
             {
-                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
-                Debug.Log("2");
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX, cellY));
             }
         }
         else
         {
             if (isGameOver == false)
             {
-                StartCoroutine(CameraController.Instance.JumpToGrid(cellX,cellY));
+                StartCoroutine(CameraController.Instance.JumpToGrid(cellX, cellY));
                 Debug.Log("3");
             }
         }
@@ -66,16 +66,20 @@ public class MainBoardController : Singleton<MainBoardController>
     {
         for (int i = 0; i < 3; i++)
         {
-            if (mainGridState[i, 0] == mainGridState[i, 1] && mainGridState[i, 1] == mainGridState[i, 2] && mainGridState[i, 0] != 0)
+            if (mainGridState[i, 0] == mainGridState[i, 1] && mainGridState[i, 1] == mainGridState[i, 2] &&
+                mainGridState[i, 0] != 0)
                 EndGame(mainGridState[i, 0]);
-            if (mainGridState[0, i] == mainGridState[1, i] && mainGridState[1, i] == mainGridState[2, i] && mainGridState[0, i] != 0)
+            if (mainGridState[0, i] == mainGridState[1, i] && mainGridState[1, i] == mainGridState[2, i] &&
+                mainGridState[0, i] != 0)
                 EndGame(mainGridState[0, i]);
         }
-        if (mainGridState[0, 0] == mainGridState[1, 1] && mainGridState[1, 1] == mainGridState[2, 2] && mainGridState[0, 0] != 0)
-            EndGame(mainGridState[0, 0]);
-        if (mainGridState[0, 2] == mainGridState[1, 1] && mainGridState[1, 1] == mainGridState[2, 0] && mainGridState[0, 2] != 0)
-            EndGame(mainGridState[0, 2]);
 
+        if (mainGridState[0, 0] == mainGridState[1, 1] && mainGridState[1, 1] == mainGridState[2, 2] &&
+            mainGridState[0, 0] != 0)
+            EndGame(mainGridState[0, 0]);
+        if (mainGridState[0, 2] == mainGridState[1, 1] && mainGridState[1, 1] == mainGridState[2, 0] &&
+            mainGridState[0, 2] != 0)
+            EndGame(mainGridState[0, 2]);
     }
 
     private void EndGame(int winner)

@@ -44,7 +44,7 @@ public class SubGridController : MonoBehaviour
         {
             gridState[x, y] = player;
             UpdateCellVisual(x, y, player);
-            
+
             CheckWinCondition();
             return true;
         }
@@ -91,7 +91,7 @@ public class SubGridController : MonoBehaviour
         whiteSquare.SetActive(true);
         winObject.SetActive(true);
         winObject.GetComponent<SpriteRenderer>().sprite = winSymbol[player];
-                
+
         // Optionally, update visuals for the sub-grid to indicate the win
     }
 }
