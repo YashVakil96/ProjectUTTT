@@ -1,7 +1,7 @@
 using UltimateTTT;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     public MainBoardController mainBoardController;
     private int currentPlayer = 1;

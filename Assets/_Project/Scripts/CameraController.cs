@@ -19,7 +19,7 @@ namespace UltimateTTT
         public CameraMode currentMode;
 
         public int currentX, currentY;
-        
+
         void Start()
         {
             int count = 0;
@@ -40,30 +40,41 @@ namespace UltimateTTT
         {
             currentX = x;
             currentY = y;
-            if (currentMode ==CameraMode.FullBoard)
+            if (currentMode == CameraMode.FullBoard)
             {
+                if (MainBoardController.Instance.mainGridState[x, y] > 0)
+                {
+                    CenterCam();
+                }
+                else
+                {
+                    Invoke("ActiveGrid", 0.6f);
+                }
+
                 yield break;
             }
+
             yield return new WaitForSeconds(1);
             if (MainBoardController.Instance.mainGridState[x, y] > 0)
             {
                 CenterCam();
             }
+
             else if (MainBoardController.Instance.isGameOver)
             {
                 CenterCam();
             }
             else
             {
-                
                 // Camera.LookAt = camPoint[x, y];
                 // Camera.Follow = camPoint[x, y];
                 // Camera.m_Lens.OrthographicSize = 1.7f;
-                
-                Vector3 newPos = new Vector3(camPoint[x, y].position.x,camPoint[x, y].position.y,-10);
-                Camera.transform.DOMove(newPos,.5f);
-                DOTween.To(() => Camera.m_Lens.OrthographicSize, x => Camera.m_Lens.OrthographicSize = x, 1.7f, 1f);
 
+                Vector3 newPos = new Vector3(camPoint[x, y].position.x, camPoint[x, y].position.y, -10);
+                Camera.transform.DOMove(newPos, .5f);
+                DOTween.To(() => Camera.m_Lens.OrthographicSize, x => Camera.m_Lens.OrthographicSize = x, 1.7f, 1f);
+                Actions.Instance.CheckMove?.Invoke();
+                Invoke("ActiveGrid", 0.6f);
             }
         }
 
@@ -74,14 +85,19 @@ namespace UltimateTTT
             // Camera.LookAt = camPoint[1, 1];
             // Camera.Follow = camPoint[1, 1];
             // Camera.m_Lens.OrthographicSize = 5;
-            Vector3 newPos = new Vector3(camPoint[1, 1].position.x,camPoint[1, 1].position.y,-10);
-            Camera.transform.DOMove(newPos,.5f);
+            Vector3 newPos = new Vector3(camPoint[1, 1].position.x, camPoint[1, 1].position.y, -10);
+            Camera.transform.DOMove(newPos, .5f);
             DOTween.To(() => Camera.m_Lens.OrthographicSize, x => Camera.m_Lens.OrthographicSize = x, 5, 1f);
+            foreach (var grid in MainBoardController.Instance.subGrids)
+            {
+                grid.Inactive.SetActive(false);
+            }
         }
 
         public void ChangeCameraMode(int mode)
         {
-            currentMode = (CameraMode)mode;
+            currentMode = (CameraMode) mode;
+
 
             if (currentMode == CameraMode.FullBoard)
             {
@@ -89,9 +105,32 @@ namespace UltimateTTT
             }
             else
             {
-                Vector3 newPos = new Vector3(camPoint[currentX, currentY].position.x,camPoint[currentX, currentY].position.y,-10);
-                Camera.transform.DOMove(newPos,.5f);
-                DOTween.To(() => Camera.m_Lens.OrthographicSize, x => Camera.m_Lens.OrthographicSize = x, 1.7f, 1f);
+                if (InputManager.Instance.firstMove)
+                {
+                    Vector3 newPos = new Vector3(camPoint[currentX, currentY].position.x,
+                        camPoint[currentX, currentY].position.y, -10);
+                    Camera.transform.DOMove(newPos, .5f);
+                    DOTween.To(() => Camera.m_Lens.OrthographicSize, x => Camera.m_Lens.OrthographicSize = x, 1.7f, 1f);
+                }
+            }
+        }
+
+
+        public void ActiveGrid()
+        {
+            foreach (var grid in MainBoardController.Instance.subGrids)
+            {
+                grid.PlayingCurrent = false;
+                grid.Inactive.SetActive(true);
+            }
+
+            MainBoardController.Instance.subGrids[currentX, currentY].PlayingCurrent = true;
+            foreach (var grid in MainBoardController.Instance.subGrids)
+            {
+                if (grid.PlayingCurrent)
+                {
+                    grid.Inactive.SetActive(false);
+                }
             }
         }
     }

@@ -18,9 +18,7 @@ public class Cell : MonoBehaviour
 
     public void OccupyCell(int player)
     {
-        Debug.Log("0");
         StartCoroutine(AnimateCell(player));
-        Debug.Log("1");
     }
 
     IEnumerator AnimateCell(int player)
@@ -32,12 +30,10 @@ public class Cell : MonoBehaviour
         if (player == 1)
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("X");
-            Debug.Log("2");
         }
         else
         {
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("O");
-            Debug.Log("2");
         }
     }
 }

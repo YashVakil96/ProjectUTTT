@@ -40,7 +40,6 @@ public class MainBoardController : Singleton<MainBoardController>
         {
             if (subGrids[subGridX, subGridY].isWon)
             {
-                Debug.Log("1");
                 mainGridState[subGridX, subGridY] = subGrids[subGridX, subGridY].winner;
                 MiniGrid.Instance.UpdateMiniGrid(subGridX, subGridY, player);
                 CheckMainGridWinCondition();
@@ -56,7 +55,6 @@ public class MainBoardController : Singleton<MainBoardController>
             if (isGameOver == false)
             {
                 StartCoroutine(CameraController.Instance.JumpToGrid(cellX, cellY));
-                Debug.Log("3");
             }
         }
     }

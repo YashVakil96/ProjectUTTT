@@ -14,6 +14,13 @@ public class SubGridController : MonoBehaviour
     public GameObject whiteSquare;
     public GameObject winObject;
     public List<Sprite> winSymbol;
+    public bool PlayingCurrent;
+    public GameObject Inactive;
+
+    void OnEnable()
+    {
+        Actions.Instance.CheckMove += CheckIfPlayingCurrentGrid;
+    }
 
     private void Start()
     {
@@ -50,6 +57,18 @@ public class SubGridController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void CheckIfPlayingCurrentGrid()
+    {
+        if (PlayingCurrent)
+        {
+            Inactive.SetActive(false);
+        }
+        else
+        {
+            Inactive.SetActive(true);
+        }
     }
 
     // Update the visual representation of the cell
