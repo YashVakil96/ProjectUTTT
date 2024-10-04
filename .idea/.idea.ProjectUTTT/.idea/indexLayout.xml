@@ -3,9 +3,13 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>Library/PackageCache/com.unity.2d.animation@9.1.2</Path>
+      <Path>Library/PackageCache/com.unity.2d.common@8.0.3</Path>
+      <Path>Library/PackageCache/com.unity.2d.sprite@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.burst@1.8.8</Path>
       <Path>Library/PackageCache/com.unity.cinemachine@2.9.7</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@2.4.4</Path>
+      <Path>Library/PackageCache/com.unity.collections@1.2.4</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
       <Path>Library/PackageCache/com.unity.feature.2d@2.0.0</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@3.0.31</Path>
@@ -43,6 +47,7 @@
       <Path>Library/PackageCache/com.unity.modules.vr@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.wind@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.xr@1.0.0</Path>
+      <Path>Library/PackageCache/com.unity.postprocessing@3.4.0</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.core@14.0.8</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.universal@14.0.8</Path>
       <Path>Library/PackageCache/com.unity.searcher@4.9.2</Path>
@@ -59,7 +64,6 @@
       <Path>Builds</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
-      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
     </explicitExcludes>
