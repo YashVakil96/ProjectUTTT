@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UltimateTTT;
 using UnityEngine;
@@ -61,6 +62,11 @@ public class SubGridController : MonoBehaviour
 
     public void CheckIfPlayingCurrentGrid()
     {
+        if (isWon)
+        {
+            Inactive.SetActive(false);
+            return;
+        }
         if (PlayingCurrent)
         {
             Inactive.SetActive(false);
@@ -74,7 +80,13 @@ public class SubGridController : MonoBehaviour
     // Update the visual representation of the cell
     private void UpdateCellVisual(int x, int y, int player)
     {
+        SpawnObject(x, y, player);
+    }
+
+    private void SpawnObject(int x, int y, int player)
+    {
         // Assuming each cell has a Text or SpriteRenderer to show X or O
+
         if (player == 1)
         {
             cells[x, y].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("X");
@@ -107,9 +119,14 @@ public class SubGridController : MonoBehaviour
     {
         isWon = true;
         winner = player;
-        whiteSquare.SetActive(true);
+        whiteSquare.SetActive(false);
         winObject.SetActive(true);
+        Inactive.SetActive(false);
         winObject.GetComponent<SpriteRenderer>().sprite = winSymbol[player];
+        foreach (var cell in cellList)
+        {
+            cell.gameObject.SetActive(false);
+        }
 
         // Optionally, update visuals for the sub-grid to indicate the win
     }

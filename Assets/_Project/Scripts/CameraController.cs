@@ -96,7 +96,7 @@ namespace UltimateTTT
 
         public void ChangeCameraMode(int mode)
         {
-            currentMode = (CameraMode) mode;
+            currentMode = (CameraMode)mode;
 
 
             if (currentMode == CameraMode.FullBoard)
@@ -127,10 +127,18 @@ namespace UltimateTTT
             MainBoardController.Instance.subGrids[currentX, currentY].PlayingCurrent = true;
             foreach (var grid in MainBoardController.Instance.subGrids)
             {
-                if (grid.PlayingCurrent)
+                if (grid.isWon)
                 {
                     grid.Inactive.SetActive(false);
                 }
+                else
+                {
+                    if (grid.PlayingCurrent)
+                    {
+                        grid.Inactive.SetActive(false);
+                    }    
+                }
+                
             }
         }
     }
